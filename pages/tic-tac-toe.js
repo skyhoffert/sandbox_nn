@@ -14,15 +14,22 @@ function(evt)
 
 let buttons = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
 for (const btn of buttons) {
-  document.getElementById(btn).addEventListener("click",
+  let elm = document.getElementById(btn)
+  elm.addEventListener("click",
   function (evt) {
     if (state != 0) {
       console.log("player tried to go not on their turn!");
       return;
     }
     state = 1;
-    document.getElementById(btn).value = "x";
+    elm.innerHTML = "x";
     elm_status.innerHTML = "NN turn.";
+
+    let msg = "bu:";
+    for (const btn2 of buttons) {
+      msg += document.getElementById(btn2).innerHTML;
+    }
+    websock.send(msg);
   }, false);
 }
 

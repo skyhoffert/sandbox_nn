@@ -11,8 +11,7 @@ void WriteToNN(char* str)
   FILE* lock = fopen(LOCK_TONN, "w");
   FILE* to_gui = fopen(FILE_TONN, "w");
 
-  fprintf(to_gui, str);
-  fprintf(to_gui, "\n");
+  fprintf(to_gui, "%s", str);
 
   fclose(to_gui);
   fclose(lock);
@@ -29,9 +28,9 @@ int main(int argc, char* argv[])
 
   while (1)
   {
-    gets(buf);
+    fgets(buf, 128, stdin);
 
-    if (strcmp(buf, "q") == 0) {
+    if (strcmp(buf, "q\n") == 0) {
       break;
     }
     
