@@ -10,6 +10,8 @@ server = WebsocketServer(host="localhost", port=8001, loglevel=3)
 client = None
 kill = False
 
+msgq = []
+
 def newclient(a,b):
   global client
   client = a
@@ -19,12 +21,8 @@ def clientleft(a,b):
   client = None
 
 def msg(a,b,c):
-
-  to_nn = open("to_nn.sandbox_nn", "r+")
-  to_nn.write(c)
-
-  if client is not None:
-    server.send_message(client, "this is a test message")
+  global msgq
+  msgq.append(c)
 
 # Setup server
 server.set_fn_new_client(newclient)
@@ -33,8 +31,26 @@ server.set_fn_message_received(msg)
 
 # Setup tick
 def Tick():
+  global client
   global kill
+  global server
+  global msgq
+
   while kill == False:
+    while len(msgq) > 0:
+      if os.path.exists("./to_nn.sandbox_nn.lock"):
+        break
+
+      lock = open("to_nn.sandbox_nn.lock", "w")
+      to_nn = open("to_nn.sandbox_nn", "a")
+      to_nn.write(msgq[0])
+      to_nn.write("\n")
+      to_nn.close()
+      lock.close()
+      os.remove("to_nn.sandbox_nn.lock")
+
+      del msgq[0]
+
     if client == None:
       sleep(1)
       continue

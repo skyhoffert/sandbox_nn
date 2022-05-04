@@ -1,0 +1,28 @@
+
+* {
+  font-family: monospace;
+}
+
+body,html {
+  background-color: black;
+  text-align: center;
+}
+
+h1 {
+  color: white;
+}
+
+p {
+  color: white;
+  display: inline;
+}
+
+.tttbtn {
+  width: 100px;
+  height: 100px;
+  color: white;
+  font-size: 32px;
+  background-color: black;
+  border: solid 1px white;
+  margin: 2px;
+}

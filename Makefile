@@ -1,9 +1,14 @@
 
 CC = gcc
 CFLAGS = -Wall -Werror
-CLIB = 
+CLIBS = 
 
-all: nn0
+all: manual_to_gui manual_to_nn
 
-nn0: src/nn0.c
-	$(CC) $(CFLAGS) -o bin/nn0 src/nn0.c $(CLIBS)
+manual_to_gui: src/manual_to_gui.c
+	$(info Making manual_to_gui.)
+	$(CC) $(CFLAGS) -o bin/manual_to_gui src/manual_to_gui.c $(CLIBS)
+
+manual_to_nn: src/manual_to_nn.c
+	$(info Making manual_to_nn.)
+	$(CC) $(CFLAGS) -o bin/manual_to_nn src/manual_to_nn.c $(CLIBS)
