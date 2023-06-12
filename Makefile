@@ -1,21 +1,15 @@
 
-CC = gcc
-CFLAGS = -Wall -Werror
-CLIBS = 
+CC=gcc
+CFLAGS=-Wall -Wextra -Wpedantic -Werror
+CINCLUDES=-Iinclude/
+CLIBS=
 
-all: manual_to_gui manual_to_nn nn_tic-tac-toe
+all: sandbox_nn
 
-clean:
-	rm -rf bin/*
+obj/node.o: src/node.c include/node.h
+	$(CC) $(CFLAGS) $(CINCLUDES) -o obj/node.o -c src/node.c $(CLIBS)
 
-manual_to_gui: src/manual_to_gui.c
-	$(info Making manual_to_gui.)
-	$(CC) $(CFLAGS) -o bin/manual_to_gui src/manual_to_gui.c $(CLIBS)
-
-manual_to_nn: src/manual_to_nn.c
-	$(info Making manual_to_nn.)
-	$(CC) $(CFLAGS) -o bin/manual_to_nn src/manual_to_nn.c $(CLIBS)
-
-nn_tic-tac-toe: src/nn_tic-tac-toe.c
-	$(info Making nn_tic-tac-toe.)
-	$(CC) $(CFLAGS) -o bin/nn_tic-tac-toe src/nn_tic-tac-toe.c $(CLIBS)
+sandbox_nn: src/sandbox_nn.c include/node.h obj/node.o
+	$(CC) $(CFLAGS) $(CINCLUDES) -o sandbox_nn src/sandbox_nn.c \
+		obj/node.o \
+		$(CLIBS)
